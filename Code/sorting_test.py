@@ -233,7 +233,7 @@ def get_sort_function():
 
 
 # If using PyTest, change this variable to the sort function you want to test
-# sort = merge_sort
+sort = counting_sort
 
 
 

@@ -6,6 +6,9 @@ def counting_sort(numbers):
     then looping over counts and copying that many numbers into output list.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
+    if len(numbers) <= 1:
+        return numbers
+
     # Find range of given numbers (minimum and maximum integer values)
     minimum, maximum = min(numbers), max(numbers)
     # Create list of counts with a slot for each number in input range
@@ -30,6 +33,9 @@ def bucket_sort(numbers, num_buckets=10):
     then sorting each bucket and concatenating all buckets in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
+    if len(numbers) <= 1:
+        return numbers
+
     # Find range of given numbers (minimum and maximum values)
     maximum = max(numbers)
     minimum = min(numbers)
