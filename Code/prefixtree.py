@@ -1,6 +1,7 @@
 #!python3
 
 from prefixtreenode import PrefixTreeNode
+from stack import ArrayStack
 
 
 class PrefixTree:
@@ -114,6 +115,79 @@ class PrefixTree:
         for child in node.children.keys():
             self._traverse(node.children[child], prefix+child, visit)
 
+    def delete(self, string):
+        """Remove string from this prefix tree, if present, or else raise ValueError"""
+        current_node, depth = self._find_node(string)
+
+
+        # if not self.contains(string):
+        #     raise ValueError(f"{string} doesn't exist in this trie.")
+        #
+        # # If string is not prefix of any other word
+        # if current_node.is_terminal():
+        #     # set terminal node to False
+        #     current_node.terminal = False
+        # else: # if current node is a leaf
+        #     node = self.root
+        #     i = 0
+        #     while i < len(string):
+        #         if len(node.children) > 1:
+        #             break
+        #         else:
+        #             del node[string[i]]
+        #         i += 1
+        #
+        # self.size -= 1
+
+        # If string is prefix of any other word
+        if current_node.is_terminal() and depth == len(string):
+            if len(current_node.children) > 0:
+                current_node.terminal = False
+                self.size -= 1
+                return False
+
+            else: # len(current_node.children) == 0:
+                return True
+
+        else:
+            if len(current_node.children) > 0:
+                return True
+            else:
+                return False
+
+        # else:
+        #     if len(current_node.children) > 0:
+        #         return
+        #
+        #     else:
+        #         del current_node
+        #         prefix = string[:depth]
+        #         self.delete(prefix)
+
+        prefix = string[:depth]
+        if self.delete(prefix):
+            del current_node
+
+
+    def delete_recursive(self, string):
+        current_node, depth = self._find_node(string)
+        del current_node
+
+
+
+	# // if we have not reached the end of the string
+
+	# 	// recur for the node corresponding to next character in
+	# 	// the string and if it returns 1, delete current node
+	# 	// (if it is non-leaf)
+
+	# // if we have reached the end of the string
+	# 	// if current node is a leaf node and don't have any children
+
+		# // if current node is a leaf node and have children
+			# // mark current node as non-leaf node (DON'T DELETE IT)
+
+
 
 def create_prefix_tree(strings):
     print(f'strings: {strings}')
@@ -144,6 +218,18 @@ def create_prefix_tree(strings):
         result = tree.contains(prefix)
         print(f'contains({prefix!r}): {result}')
 
+
+    print('\nDeleting strings')
+    print(f'tree: {tree}')
+    print('Delete [sea] [Shelly] [by]')
+    tree.delete_recursive('Shelly')
+    # tree.delete('by')
+    # tree.delete('sea')
+    print(f'size: {len(tree.strings())}')
+    print(f'tree: {tree}')
+
+
+
     print('\nCompleting prefixes in tree:')
     for prefix in prefixes:
         completions = tree.complete(prefix)
@@ -156,10 +242,13 @@ def create_prefix_tree(strings):
     print(f'matches? {matches}')
 
 
+
+
+
 def main():
     # Simpe test case of string with partial substring overlaps
-    strings = ['ABC', 'ABD', 'A', 'XYZ']
-    create_prefix_tree(strings)
+    # strings = ['ABC', 'ABD', 'A', 'XYZ']
+    # create_prefix_tree(strings)
 
     # Create a dictionary of tongue-twisters with similar words to test with
     tongue_twisters = {

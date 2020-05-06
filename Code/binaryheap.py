@@ -21,8 +21,8 @@ class BinaryMinHeap(object):
 
     def is_empty(self):
         """Return True if this heap is empty, or False otherwise."""
-        # TODO: Check if empty based on how many items are in the list
-        # ...
+        # Check if empty based on how many items are in the list
+        return self.size() == 0
 
     def size(self):
         """Return the number of items in this heap."""
@@ -94,10 +94,13 @@ class BinaryMinHeap(object):
         # Get the parent's index and value
         parent_index = self._parent_index(index)
         parent_item = self.items[parent_index]
-        # TODO: Swap this item with parent item if values are out of order
-        # ...
-        # TODO: Recursively bubble up again if necessary
-        # ...
+        # Swap this item with parent item if values are out of order
+        if parent_index >= 0 and item < parent_item:
+            self._swap(self.items, parent_index, index)
+        # Recursively bubble up again if necessary
+        # if parent_index and self.items[parent_index] < self.items[self._parent_index(parent_index)]:
+            self._bubble_up(parent_index)
+
 
     def _bubble_down(self, index):
         """Ensure the heap ordering property is true below the given index,
@@ -116,12 +119,19 @@ class BinaryMinHeap(object):
         item = self.items[index]
         # TODO: Determine which child item to compare this node's item to
         child_index = 0
-        # ...
+        if right_index < self.size():
+            if self.items[left_index] <= self.items[right_index]:
+                child_index = left_index
+            else:
+                child_index = right_index
+        else:
+            child_index = left_index
         # TODO: Swap this item with a child item if values are out of order
         child_item = self.items[child_index]
-        # ...
+        if child_item < item:
+            self._swap(self.items, index, child_index)
         # TODO: Recursively bubble down again if necessary
-        # ...
+            self._bubble_down(child_index)
 
     def _last_index(self):
         """Return the last valid index in the underlying array of items."""
@@ -141,6 +151,10 @@ class BinaryMinHeap(object):
         """Return the right child index of the item at the given index."""
         return (index << 1) + 2  # Shift left to multiply by 2
 
+    def _swap(self, a, index1, index2):
+        temp = a[index1]
+        a[index1] = a[index2]
+        a[index2] = temp
 
 def test_binary_min_heap():
     # Create a binary min heap of 7 items

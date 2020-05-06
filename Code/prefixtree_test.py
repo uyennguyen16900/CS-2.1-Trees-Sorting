@@ -213,6 +213,37 @@ class PrefixTreeTest(unittest.TestCase):
         assert tree.contains('Y') is False
         assert tree.contains('Z') is False
 
+    def test_delete(self):
+        strings = ['ABC', 'ABD', 'A', 'XYZ', 'XYWE', 'XYMW', 'XY']
+        tree = PrefixTree(strings)
+
+        assert tree.size == 7
+        tree.delete('A')
+        assert tree.size == 6
+        assert tree.contains('A') is False
+        assert tree.complete('A') == ['ABC', 'ABD']
+
+        with self.assertRaises(ValueError):
+            tree.delete('X')
+
+        with self.assertRaises(ValueError):
+            tree.delete('')
+
+        assert tree.contains('XY') is True
+        tree.delete('XY')
+        assert tree.size == 5
+        assert tree.contains('XY') is False
+        assert tree.complete('XY') == ['XYZ', 'XYWE', 'XYMW']
+
+        assert tree.contains('XYZ') is True
+        tree.delete('XYZ')
+        assert tree.size == 4
+        assert tree.contains('XYZ') is False
+        assert tree.complete('XY') == ['XYWE', 'XYMW']
+        assert tree.complete('XYZ') == []
+
+
+
     def test_complete(self):
         strings = ['ABC', 'ABD', 'A', 'XYZ']
         tree = PrefixTree(strings)
