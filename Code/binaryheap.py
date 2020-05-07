@@ -96,9 +96,9 @@ class BinaryMinHeap(object):
         parent_item = self.items[parent_index]
         # Swap this item with parent item if values are out of order
         if parent_index >= 0 and item < parent_item:
-            self._swap(self.items, parent_index, index)
+            self.items[parent_index], self.items[index] = self.items[index], self.items[parent_index]
+
         # Recursively bubble up again if necessary
-        # if parent_index and self.items[parent_index] < self.items[self._parent_index(parent_index)]:
             self._bubble_up(parent_index)
 
 
@@ -126,11 +126,11 @@ class BinaryMinHeap(object):
                 child_index = right_index
         else:
             child_index = left_index
-        # TODO: Swap this item with a child item if values are out of order
+        # Swap this item with a child item if values are out of order
         child_item = self.items[child_index]
         if child_item < item:
-            self._swap(self.items, index, child_index)
-        # TODO: Recursively bubble down again if necessary
+            self.items[child_index], self.items[index] = self.items[index], self.items[child_index]
+        # Recursively bubble down again if necessary
             self._bubble_down(child_index)
 
     def _last_index(self):
@@ -151,10 +151,31 @@ class BinaryMinHeap(object):
         """Return the right child index of the item at the given index."""
         return (index << 1) + 2  # Shift left to multiply by 2
 
-    def _swap(self, a, index1, index2):
-        temp = a[index1]
-        a[index1] = a[index2]
-        a[index2] = temp
+    def heap_sort(self):
+        index = self._last_index()
+        while index > 0:
+            self.items[0], self.items[index] = self.items[index], self.items[0]
+            self._heapify(0, index)
+            index -= 1
+
+
+    def _heapify(self, index, last_index):
+        left_index = self._left_child_index(index)
+        right_index = self._right_child_index(index)
+
+        smallest = index
+        if left_index < last_index and self.items[left_index] < self.items[index] and self.items[left_index] < self.items[right_index]:
+            smallest = left_index
+
+        if right_index < last_index and self.items[right_index] < self.items[left_index]:
+            smallest = right_index
+
+        if smallest != index:
+            self.items[smallest], self.items[index] = self.items[index], self.items[smallest]
+            self._heapify(smallest, last_index)
+        else:
+            return
+
 
 def test_binary_min_heap():
     # Create a binary min heap of 7 items
@@ -173,12 +194,17 @@ def test_binary_min_heap():
         correct = heap_min == real_min
         print('get_min: {}, correct: {}'.format(heap_min, correct))
 
+    print('\nSorting the heap in descending order:')
+    heap.heap_sort()
+    print(heap)
+
     print('\nDeleting items:')
     for item in sorted(items):
         heap_min = heap.delete_min()
         print('delete_min: {}'.format(heap_min))
         print('heap: {}'.format(heap))
         print('size: {}'.format(heap.size()))
+
 
 
 if __name__ == '__main__':

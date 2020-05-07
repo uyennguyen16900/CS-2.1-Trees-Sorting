@@ -29,7 +29,7 @@ class PriorityQueue(object):
         """Insert the given item into this priority queue in order according to
         the given priority."""
         # TODO: Insert given item into heap in order according to given priority
-        self.insert()
+        self.insert((priority, item))
 
     def front(self):
         """Return the item at the front of this priority queue without removing
@@ -54,4 +54,4 @@ class PriorityQueue(object):
         if self.size() == 0:
             raise ValueError('Priority queue is empty and has no front item')
         # TODO: Replace and return minimum item from heap
-        self.delete_min()
+        self.replace_min((priority, item))
