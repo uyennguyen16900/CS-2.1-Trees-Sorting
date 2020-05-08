@@ -151,31 +151,6 @@ class BinaryMinHeap(object):
         """Return the right child index of the item at the given index."""
         return (index << 1) + 2  # Shift left to multiply by 2
 
-    def heap_sort(self):
-        index = self._last_index()
-        while index > 0:
-            self.items[0], self.items[index] = self.items[index], self.items[0]
-            self._heapify(0, index)
-            index -= 1
-
-
-    def _heapify(self, index, last_index):
-        left_index = self._left_child_index(index)
-        right_index = self._right_child_index(index)
-
-        smallest = index
-        if left_index < last_index and self.items[left_index] < self.items[index] and self.items[left_index] < self.items[right_index]:
-            smallest = left_index
-
-        if right_index < last_index and self.items[right_index] < self.items[left_index]:
-            smallest = right_index
-
-        if smallest != index:
-            self.items[smallest], self.items[index] = self.items[index], self.items[smallest]
-            self._heapify(smallest, last_index)
-        else:
-            return
-
 
 def test_binary_min_heap():
     # Create a binary min heap of 7 items
