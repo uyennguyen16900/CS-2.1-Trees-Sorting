@@ -4,8 +4,8 @@ from sorting_iterative import insertion_sort
 def counting_sort(numbers):
     """Sort given numbers (integers) by counting occurrences of each number,
     then looping over counts and copying that many numbers into output list.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n + k) where k is range the of the non-negative key values
+    Memory usage: O(n + k)"""
     if len(numbers) <= 1:
         return numbers
 
@@ -31,8 +31,8 @@ def counting_sort(numbers):
 def bucket_sort(numbers, num_buckets=10):
     """Sort given numbers by distributing into buckets representing subranges,
     then sorting each bucket and concatenating all buckets in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n^2)
+    Memory usage: O(n + k)"""
     if len(numbers) <= 1:
         return numbers
 

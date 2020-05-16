@@ -119,26 +119,6 @@ class PrefixTree:
         """Remove string from this prefix tree, if present, or else raise ValueError"""
         current_node, depth = self._find_node(string)
 
-
-        # if not self.contains(string):
-        #     raise ValueError(f"{string} doesn't exist in this trie.")
-        #
-        # # If string is not prefix of any other word
-        # if current_node.is_terminal():
-        #     # set terminal node to False
-        #     current_node.terminal = False
-        # else: # if current node is a leaf
-        #     node = self.root
-        #     i = 0
-        #     while i < len(string):
-        #         if len(node.children) > 1:
-        #             break
-        #         else:
-        #             del node[string[i]]
-        #         i += 1
-        #
-        # self.size -= 1
-
         # If string is prefix of any other word
         if current_node.is_terminal() and depth == len(string):
             if len(current_node.children) > 0:
@@ -154,15 +134,6 @@ class PrefixTree:
                 return True
             else:
                 return False
-
-        # else:
-        #     if len(current_node.children) > 0:
-        #         return
-        #
-        #     else:
-        #         del current_node
-        #         prefix = string[:depth]
-        #         self.delete(prefix)
 
         prefix = string[:depth]
         if self.delete(prefix):
